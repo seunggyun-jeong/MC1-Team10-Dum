@@ -8,9 +8,7 @@
 import SwiftUI
 
 
-
-
-struct LeafView: View {
+struct LeafRightView: View {
     
     let index: Int
     let offset: CGSize
@@ -24,7 +22,6 @@ struct LeafView: View {
         Image("leafRight")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .overlay(Text(String(describing: index)))
             .rotationEffect(.degrees(Double(position.width / 5)))
             .offset(offset)
             .opacity(2 - Double(abs(position.width / 50)))
@@ -44,12 +41,42 @@ struct LeafView: View {
                     }
             )
     }
-    
-    
 }
 
-//struct LeafView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LeafView()
-//    }
-//}
+
+struct LeafLeftView: View {
+    
+    let index: Int
+    let offset: CGSize
+   
+    var removal: (() -> Void)? = nil
+    
+    @State private var isDragging = false
+    @State private var position=CGSize.zero
+    
+    var body: some View {
+        Image("leafLeft")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .rotationEffect(.degrees(Double(position.width / 5)))
+            .offset(offset)
+            .opacity(2 - Double(abs(position.width / 50)))
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        position = value.translation
+                        isDragging = true
+                    }
+                    .onEnded{ _ in
+                        if abs(position.width) > 100 {
+                            removal?()
+                        } else {
+                            position = .zero
+                        }
+                        isDragging = false
+                    }
+            )
+    }
+}
+
+
