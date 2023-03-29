@@ -193,15 +193,14 @@ struct Stage3_Main: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Button {
-                            // 다음으로 넘어가는 기능~!
-                        } label: {
+                        NavigationLink(destination: OutroView()) {
                             Image("nextButton")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 200)
                         }
                         .disabled(!deadFlag)
+
                     }
                 }
                 .padding([.bottom, .trailing], 50)
