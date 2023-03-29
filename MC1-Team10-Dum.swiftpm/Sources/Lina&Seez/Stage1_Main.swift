@@ -5,6 +5,9 @@ import SwiftUI
 
 struct Stage1_Main: View {
     
+    @StateObject var leafVM:LeafViewModel = LeafViewModel()
+    
+    @State private var deadFlag
     
     
     var body: some View{
@@ -24,15 +27,29 @@ struct Stage1_Main: View {
             Image("roseMonster")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .rotationEffect(leafVM.countLeaf == 0 ? .degrees(3) : .degrees(0))
+                .animation(.linear.repeatForever().speed(5), value: leafVM.countLeaf)
             
             
             GeometryReader { proxy in
-                ForEach(0...5, id:\.self) { index in
-                    LeafRightView(index: index, offset: logicalFunction(size: proxy.size))
-                    LeafLeftView(index: index, offset: logicalFunction(size: proxy.size))
+                ForEach(0...4, id:\.self) { index in
+                    LeafRightView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
+                    LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                 }
+            }.animation(.easeInOut(duration: 1))
+            
+            ZStack{
+                Image("result")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
             }
+            .opacity(deadFlag ? 0.8:0.0)
+            
+            
         }
+        
+        
+        
     }
     
     func logicalFunction(size: CGSize) -> CGSize {
@@ -43,4 +60,11 @@ struct Stage1_Main: View {
         
     }
     
+}
+
+
+struct FinalView: View{
+    var body: some View{
+        Image("Stage 7")
+    }
 }

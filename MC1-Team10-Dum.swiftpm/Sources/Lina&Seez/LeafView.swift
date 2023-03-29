@@ -12,11 +12,14 @@ struct LeafRightView: View {
     
     let index: Int
     let offset: CGSize
-   
+    
     var removal: (() -> Void)? = nil
     
     @State private var isDragging = false
     @State private var position=CGSize.zero
+    
+    @StateObject var leafVM:LeafViewModel
+
     
     var body: some View {
         Image("leafRight")
@@ -34,6 +37,8 @@ struct LeafRightView: View {
                     .onEnded{ _ in
                         if abs(position.width) > 100 {
                             removal?()
+                            leafVM.removeLeaf()
+                            //print("현재 이파리 개수 는?? ---> \(leafVM.countLeaf)")
                         } else {
                             position = .zero
                         }
@@ -54,6 +59,8 @@ struct LeafLeftView: View {
     @State private var isDragging = false
     @State private var position=CGSize.zero
     
+    @StateObject var leafVM:LeafViewModel
+    
     var body: some View {
         Image("leafLeft")
             .resizable()
@@ -70,6 +77,8 @@ struct LeafLeftView: View {
                     .onEnded{ _ in
                         if abs(position.width) > 100 {
                             removal?()
+                            leafVM.removeLeaf()
+                            //print("현재 이파리 개수 는?? ---> \(leafVM.countLeaf)")
                         } else {
                             position = .zero
                         }
