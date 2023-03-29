@@ -9,9 +9,9 @@ import SwiftUI
 
 struct IntroView: View {
     
-    let backgroundEffectOffsetY: [CGFloat] = [100, 0, 100, 100, 100, 100, 100]
+    let backgroundEffectOffsetY: [CGFloat] = [100, 0, 100, 900, 900, 900, 900]
     let planetFrameWidth: [CGFloat] = [400, 500, 1000, 1000, 1000, 1000, 1000]
-    let planetOffsetY: [CGFloat] = [-100, 15, 500, 500, 500, 500, 500]
+    let planetOffsetY: [CGFloat] = [-100, 15, 500, 900, 900, 900, 900]
     
     let titleFirstString: [CGFloat] = [-500, 0, 0, 0, 0, 0, 0]
     let titleSecondString: [CGFloat] = [-200, 0, 0, 0, 0, 0, 0]
@@ -24,6 +24,7 @@ struct IntroView: View {
     @State private var pageIndex: Int = 0
     @State private var startFlag: Bool = false
     @State private var endFlag: Bool = false
+    @State private var imageViewFlag: Bool = false
     @State private var textFlag: Bool = false
     
     var body: some View {
@@ -68,29 +69,28 @@ struct IntroView: View {
                     .isHidden(startFlag, remove: startFlag)
             }
 
-            
-            Group {
-                Button(action: {
-                    pageIndex += 1
-                    if startFlag==false {
-                        startFlag = true
-                    }
-                    if pageIndex > 5 {
-                        endFlag = true
-                    }
-                }) {
-                    Text("\(buttonText[pageIndex])")
-                        .foregroundColor(.white)
-                        .bold()
-                        .font(.system(size: 30))
-                        .animation(.linear(duration: 2), value: pageIndex)
-                        .isHidden(endFlag, remove: endFlag)
-                    NavigationLink(destination: ContentView()) {
-                        Text("게임시작!")
-                    }
-                    .isHidden(!endFlag)
-                    
+            Button(action: {
+                pageIndex += 1
+                if startFlag==false {
+                    startFlag = true
                 }
+                if pageIndex > 5 {
+                    endFlag = true
+                    pageIndex = 0
+                }
+                
+            }) {
+                Text("\(buttonText[pageIndex])")
+                    .foregroundColor(.white)
+                    .bold()
+                    .font(.system(size: 30))
+                    .animation(.linear(duration: 2), value: pageIndex)
+                    .isHidden(endFlag, remove: endFlag)
+                NavigationLink(destination: ContentView()) {
+                    Text("게임시작!")
+                }
+                .isHidden(!endFlag)
+                
             }
             .offset(y:300)
             
