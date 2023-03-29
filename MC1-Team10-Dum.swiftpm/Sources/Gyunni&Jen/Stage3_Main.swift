@@ -21,10 +21,12 @@ struct Stage3_Main: View {
 
     var body: some View {
         ZStack {
+            // 배경화면
             Image("Stage3Bg")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
+            // 몬스터들
             Group {
                 HStack {
                     Image("GQ_monster")
@@ -46,12 +48,14 @@ struct Stage3_Main: View {
             .rotationEffect(animationFlag ? .degrees(0) : .degrees(3))
             .animation(.linear.repeatCount(5).speed(5), value: animationFlag)
             
+            // 바닥에 용사들 모임
             VStack {
                 Image("heros")
                     .resizable()
                     .padding(.bottom, 20)
             }
             
+            // 적들의 공격 말풍선
             Group {
                 // TODO: - GQ --> HP <= 700 일 때 --> GQ_attack --> HP += 100
                 Image("question_attack")
@@ -85,6 +89,7 @@ struct Stage3_Main: View {
             .padding(.bottom, 400)
             
             VStack {
+                // 체력바
                 ZStack {
                     RoundedRectangle(cornerRadius: 50)
                         .foregroundColor(Color.white)
@@ -102,7 +107,9 @@ struct Stage3_Main: View {
                 
                 Spacer()
                 
+                // 히어로 공격 버튼s
                 HStack (alignment: .top) {
+                    // 재밌는 발표
                     Button {
                         attackMethod(damage: 200)
                         ultimateCount += 1
@@ -117,6 +124,7 @@ struct Stage3_Main: View {
                     }
                     
                     VStack {
+                        // 솔의 발연기
                         Button {
                             attackMethod(damage: 700)
                             isUltimateOn.toggle()
@@ -133,7 +141,6 @@ struct Stage3_Main: View {
                                     .scaledToFit()
                                     .frame(width: 250)
                             }
-                            
                         }
                         .disabled(!isUltimateOn)
                         .rotationEffect(isUltimateOn ? Angle(degrees: 3) : Angle(degrees: 0))
@@ -144,7 +151,8 @@ struct Stage3_Main: View {
                             .opacity(isUltimateOn ? 1.0 : 0)
                     }
                     .animation(isUltimateOn ? .linear.repeatForever() : .linear, value: isUltimateOn)
-                                        
+                    
+                    // 아이디어 수렴과 발산
                     Button {
                         attackMethod(damage: 200)
                     } label: {
@@ -158,9 +166,29 @@ struct Stage3_Main: View {
             .padding(.top, 50)
             .padding(.bottom, 200)
             
+            // 퀘스트 클리어 시 아웃트로
             ZStack {
                 Rectangle()
                     .foregroundColor(.black)
+                
+                HStack(spacing: 30) {
+                    VStack {
+                        Image("GQ_monster")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200)
+                        Text("Mentor. JUDY")
+                            .foregroundColor(.white)
+                            .font(.system(size: 30))
+                            .bold()
+                    }
+                    
+                    Text("어색함 괴물을 물리쳤군! 수고했어!\nCBL을 위해서 가장 필요한 스킬인 소통 능력이\n 잘 장착되었길 바란다!")
+                        .foregroundColor(.white)
+                        .font(.system(size: 30))
+                        .bold()
+                }
+                
                 VStack {
                     Spacer()
                     HStack {
