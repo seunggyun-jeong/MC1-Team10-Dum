@@ -12,6 +12,8 @@ import SwiftUI
 
 struct LeafView: View {
     
+    let index: Int
+    let offset: CGSize
    
     var removal: (() -> Void)? = nil
     
@@ -22,8 +24,9 @@ struct LeafView: View {
         Image("leafRight")
             .resizable()
             .aspectRatio(contentMode: .fit)
+            .overlay(Text(String(describing: index)))
             .rotationEffect(.degrees(Double(position.width / 5)))
-            .offset(x: position.width * 5, y: 0)
+            .offset(offset)
             .opacity(2 - Double(abs(position.width / 50)))
             .gesture(
                 DragGesture()
@@ -45,8 +48,8 @@ struct LeafView: View {
     
 }
 
-struct LeafView_Previews: PreviewProvider {
-    static var previews: some View {
-        LeafView()
-    }
-}
+//struct LeafView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LeafView()
+//    }
+//}

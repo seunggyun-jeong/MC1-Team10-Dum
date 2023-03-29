@@ -32,10 +32,24 @@ struct Stage1_Main: View {
                 .aspectRatio(contentMode: .fit)
             
             
-            LeafView()
+            GeometryReader { proxy in
+                    ForEach(0...5, id:\.self) { index in
+                    LeafView(index: index, offset: logicalFunction(size: proxy.size))
+                }
+            }
         }
     }
     
+    func logicalFunction(size: CGSize) -> CGSize {
+            
+            // Do your works here!
+            
+            let width: CGFloat = CGFloat.random(in: 0.0...size.width)
+            let height: CGFloat = CGFloat.random(in: 0.0...size.height)
+            
+            return CGSize(width: width, height: height)
+            
+        }
     /*
     func removeLeaf(at index: Int) {
         leaves.remove(at: index)
