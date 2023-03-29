@@ -7,14 +7,18 @@
 
 import SwiftUI
 
+extension View {
+    func stacked(at position: Int, in total: Int) -> some View {
+        let offset = Double(total - position)
+        return self.offset(x: 0, y: offset * 10)
+    }
+}
+
 struct Stage1_Main: View {
-    var removal: (() -> Void)? = nil
-    
-        
-    @State private var isDragging = false
-    @State private var position=CGSize.zero
     
     
+    @State private var leaves = Array<Leaf>(repeating: Leaf.example, count:10)
+
     var body: some View{
         ZStack{
             Image("spaceAwkward")
@@ -34,28 +38,19 @@ struct Stage1_Main: View {
             
             
             ZStack{
-                Image("leapRight")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .rotationEffect(.degrees(Double(position.width / 5)))
-                    .offset(x: position.width * 5, y: 0)
-                    .opacity(2 - Double(abs(position.width / 50)))
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                position = value.translation
-                                isDragging = true
-                            }
-                            .onEnded{ _ in
-                                if abs(position.width) > 100 {
-                                    removal?()
-                                } else {
-                                    position = .zero
-                                }
-                                isDragging = false
-                            }
-                    )
+                ForEach(0..<leaves.count, id:\.self){
+                    index in
+                    LeafView(leaf:leaves[index]){
+                        withAnimation{removeLeaf(at: index)
+                        }
+                    }
+                    .stacked(at:index, in:leaves.count)
+                }
             }
         }
+    }
+    
+    func removeLeaf(at index: Int) {
+        leaves.remove(at: index)
     }
 }
