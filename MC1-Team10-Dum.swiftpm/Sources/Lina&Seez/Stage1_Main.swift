@@ -7,19 +7,14 @@
 
 import SwiftUI
 
-extension View {
-    func stacked(at position: Int, in total: Int) -> some View {
-        let offset = Double(total - position)
-        return self.offset(x: 0, y: offset * 10)
-    }
-}
+
 
 struct Stage1_Main: View {
     
     
-    @State private var leaves = Array<Leaf>(repeating: Leaf.example, count:10)
 
     var body: some View{
+        
         ZStack{
             Image("spaceAwkward")
                 .resizable()
@@ -37,20 +32,13 @@ struct Stage1_Main: View {
                 .aspectRatio(contentMode: .fit)
             
             
-            ZStack{
-                ForEach(0..<leaves.count, id:\.self){
-                    index in
-                    LeafView(leaf:leaves[index]){
-                        withAnimation{removeLeaf(at: index)
-                        }
-                    }
-                    .stacked(at:index, in:leaves.count)
-                }
-            }
+            LeafView()
         }
     }
     
+    /*
     func removeLeaf(at index: Int) {
         leaves.remove(at: index)
     }
+     */
 }

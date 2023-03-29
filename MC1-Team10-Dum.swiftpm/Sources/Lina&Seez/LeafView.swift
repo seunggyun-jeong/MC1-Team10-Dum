@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-struct Leaf {
-    
-    let word: String
-  
-    static let example = Leaf(word : "근심걱정")
-}
+
 
 
 struct LeafView: View {
     
-    let leaf: Leaf
-    
+   
     var removal: (() -> Void)? = nil
     
-        
     @State private var isDragging = false
     @State private var position=CGSize.zero
     
@@ -54,6 +47,6 @@ struct LeafView: View {
 
 struct LeafView_Previews: PreviewProvider {
     static var previews: some View {
-        LeafView(leaf: Leaf.example)
+        LeafView()
     }
 }
