@@ -26,7 +26,7 @@ struct LeafView: View {
     @State private var position=CGSize.zero
     
     var body: some View {
-        Image("leapRight")
+        Image("leafRight")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .rotationEffect(.degrees(Double(position.width / 5)))
@@ -52,7 +52,7 @@ struct LeafView: View {
     
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct LeafView_Previews: PreviewProvider {
     static var previews: some View {
         LeafView(leaf: Leaf.example)
     }
