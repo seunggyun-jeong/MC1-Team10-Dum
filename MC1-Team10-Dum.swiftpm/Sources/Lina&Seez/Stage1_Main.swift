@@ -7,8 +7,6 @@ struct Stage1_Main: View {
     
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
     
-    @State private var deadFlag
-    
     
     var body: some View{
         
@@ -38,12 +36,7 @@ struct Stage1_Main: View {
                 }
             }.animation(.easeInOut(duration: 1))
             
-            ZStack{
-                Image("result")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            }
-            .opacity(deadFlag ? 0.8:0.0)
+            
             
             
         }
@@ -63,8 +56,4 @@ struct Stage1_Main: View {
 }
 
 
-struct FinalView: View{
-    var body: some View{
-        Image("Stage 7")
-    }
-}
+
