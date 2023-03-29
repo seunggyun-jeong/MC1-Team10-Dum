@@ -11,6 +11,8 @@ struct Stage3_Main: View {
     
     @State private var currentHP = 1060.0
     @State private var animationFlag = false
+    @State private var ultimateCount = 0
+    @State private var isUltimateOn = false
     
     var body: some View {
         ZStack {
@@ -57,6 +59,10 @@ struct Stage3_Main: View {
                 HStack{
                     Button {
                         currentHP -= 100
+                        ultimateCount += 1
+                        if ultimateCount >= 5 {
+                            isUltimateOn.toggle()
+                        }
                         animationFlag.toggle()
                     } label: {
                         Image("funnyPT")
@@ -65,15 +71,39 @@ struct Stage3_Main: View {
                             .frame(width: 250)
                     }
                     
-                    Button {
-                        currentHP -= 200
-                        animationFlag.toggle()
-                    } label: {
-                        Image("actSol")
+                    VStack {
+                        Image("activated")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 250)
+                            .frame(width: 200)
+                            .opacity(ultimateCount < 5 ? 0 : 1.0)
+                        
+                        Button {
+                            currentHP -= 200
+                            ultimateCount = 0
+                            isUltimateOn.toggle()
+                            animationFlag.toggle()
+                        } label: {
+                            if !isUltimateOn {
+                                Image("actSol_disable")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 250)
+                            }
+                            else {
+                                Image("actSol")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 250)
+                            }
+                            
+                        }
+                        .disabled(!isUltimateOn)
+                        .rotationEffect(isUltimateOn ? Angle(degrees: 3) : Angle(degrees: 0))
+
                     }
+                    .animation(.default, value: isUltimateOn)
+                                        
                     Button {
                         currentHP -= 150
                     } label: {
@@ -86,8 +116,8 @@ struct Stage3_Main: View {
                 }
                 
             }
-            .padding([.top, .bottom], 50)
-            .padding(.bottom, 100)
+            .padding(.top, 50)
+            .padding(.bottom, 150)
             
             
         }
