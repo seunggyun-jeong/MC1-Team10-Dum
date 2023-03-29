@@ -5,7 +5,7 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                IntroView()
             }
             .navigationBarHidden(true)
             .navigationViewStyle(StackNavigationViewStyle())
