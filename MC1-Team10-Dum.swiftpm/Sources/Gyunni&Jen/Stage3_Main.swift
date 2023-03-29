@@ -14,30 +14,75 @@ struct Stage3_Main: View {
     @State private var ultimateCount = 0
     @State private var isUltimateOn = false
     
+    @State private var GQFlag: Bool = false
+    @State private var GAFlag: Bool = false
+    @State private var MCFlag: Bool = false
+    @State private var deadFlag: Bool = false
+
     var body: some View {
         ZStack {
             Image("Stage3Bg")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
+            
             Group {
                 HStack {
-                    Image("GQ")
+                    Image("GQ_monster")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 150)
-                        .padding(.trailing, 100)
-                    Image("GA")
+                        .frame(width: 200)
+                        .padding(.trailing, 150)
+                    Image("GA_monster")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 150)
+                        .frame(width: 200)
                 }
                     Image("MC1")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 180)
+                        .frame(width: 200)
             }
+            .padding(.bottom, 200)
             .rotationEffect(animationFlag ? .degrees(0) : .degrees(3))
             .animation(.linear.repeatCount(5).speed(5), value: animationFlag)
+            
+            VStack {
+                Image("heros")
+                    .resizable()
+                    .padding(.bottom, 20)
+            }
+            
+            Group {
+                // TODO: - GQ --> HP <= 700 일 때 --> GQ_attack --> HP += 100
+                Image("question_attack")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200)
+                .opacity(GQFlag ? 1.0 : 0)
+                .padding(.trailing, 700)
+                .animation(.linear(duration: 1), value: GQFlag)
+            
+                // TODO: - GA --> HP <= 500 일 때 --> GA_attack --> HP += 100
+                Image("GA_attack")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200)
+                .opacity(GAFlag ? 1.0 : 0)
+                .padding(.leading, 700)
+                .animation(.linear(duration: 1), value: GAFlag)
+
+                
+                // TODO: - MC1 --> HP <= 100 일 때 --> MC_attack --> HP += 500
+                Image("fight_attack")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200)
+                .opacity(MCFlag ? 1.0 : 0)
+                .padding(.leading, 350)
+                .padding(.bottom, 50)
+                .animation(.linear(duration: 1), value: MCFlag)
+            }
+            .padding(.bottom, 400)
             
             VStack {
                 ZStack {
@@ -56,14 +101,14 @@ struct Stage3_Main: View {
                 }
                 
                 Spacer()
-                HStack{
+                
+                HStack (alignment: .top) {
                     Button {
-                        currentHP -= 100
+                        attackMethod(damage: 200)
                         ultimateCount += 1
-                        if ultimateCount >= 5 {
+                        if ultimateCount == 5 {
                             isUltimateOn.toggle()
                         }
-                        animationFlag.toggle()
                     } label: {
                         Image("funnyPT")
                             .resizable()
@@ -72,17 +117,9 @@ struct Stage3_Main: View {
                     }
                     
                     VStack {
-                        Image("activated")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                            .opacity(ultimateCount < 5 ? 0 : 1.0)
-                        
                         Button {
-                            currentHP -= 200
-                            ultimateCount = 0
+                            attackMethod(damage: 700)
                             isUltimateOn.toggle()
-                            animationFlag.toggle()
                         } label: {
                             if !isUltimateOn {
                                 Image("actSol_disable")
@@ -100,26 +137,78 @@ struct Stage3_Main: View {
                         }
                         .disabled(!isUltimateOn)
                         .rotationEffect(isUltimateOn ? Angle(degrees: 3) : Angle(degrees: 0))
-
+                        Image("activated")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 140)
+                            .opacity(isUltimateOn ? 1.0 : 0)
                     }
-                    .animation(.default, value: isUltimateOn)
+                    .animation(isUltimateOn ? .linear.repeatForever() : .linear, value: isUltimateOn)
                                         
                     Button {
-                        currentHP -= 150
+                        attackMethod(damage: 200)
                     } label: {
                         Image("idea")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 250)
                     }
-
                 }
-                
             }
             .padding(.top, 50)
-            .padding(.bottom, 150)
+            .padding(.bottom, 200)
             
-            
+            ZStack {
+                Rectangle()
+                    .foregroundColor(.black)
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            // 다음으로 넘어가는 기능~!
+                        } label: {
+                            Image("nextButton")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                        }
+                        .disabled(!deadFlag)
+                    }
+                }
+                .padding([.bottom, .trailing], 50)
+            }
+            .opacity(deadFlag ? 0.8 : 0.0)
+        }
+    }
+    
+    func attackMethod(damage: Double) {
+        // width가 0보다 밑으로 내려가지 않게 예외 처리
+        if (currentHP - damage) <= 0.0 {
+            currentHP = 0
+        } else {
+            currentHP -= damage
+        }
+        animationFlag.toggle()
+        
+        if !GQFlag && currentHP <= 700 {
+            GQFlag.toggle()
+            currentHP += 300
+        }
+        
+        if !GAFlag && currentHP <= 500 {
+            GAFlag.toggle()
+            currentHP += 300
+        }
+        
+        if !MCFlag && currentHP <= 100 {
+            MCFlag.toggle()
+            currentHP += 500
+        }
+        
+        if currentHP <= 0 {
+            deadFlag = true
+            print("으앙 주금")
         }
     }
 }
