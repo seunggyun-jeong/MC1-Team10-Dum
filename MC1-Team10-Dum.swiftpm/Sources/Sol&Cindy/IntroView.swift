@@ -42,7 +42,6 @@ struct IntroView: View {
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
                     pageIndex += 1
-                    
                 }
             Image("intro_dumbs")
                 .offset(x: herodumbs ? 1200 : -1200)

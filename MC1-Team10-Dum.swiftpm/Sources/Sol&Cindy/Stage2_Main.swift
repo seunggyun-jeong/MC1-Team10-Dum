@@ -38,15 +38,15 @@ struct Stage2_Main: View {
                 Image("stage2_name")
                     .resizable()
                     .scaledToFit()
-                    .frame(width:392)
-                    .offset(x:100,y:-160)
+                    .frame(width: 392)
+                    .offset(x: 100, y: -160)
                     .isHidden(endFlag)
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 50)
                             .foregroundColor(Color.white)
-                            .border(.black)
-                            .frame(width: 400, height: 34)
+//                            .border(.black)
+                            .frame(width: 320, height: 34)
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 50)
@@ -54,14 +54,14 @@ struct Stage2_Main: View {
                             .frame(width: decibel, height: 20)
                             .animation(.spring(), value: decibel)
                         }
-                        .frame(width: 390, height: 20, alignment: .leading)
+                        .frame(width: 310, height: 20, alignment: .leading)
                     }
                     .isHidden(endFlag)
 
                     Image(monsterImageName)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: endFlag ? 0: 929)
+                        .frame(width: endFlag ? 0 : 929)
                         .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
                         .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
                         .rotationEffect(.degrees(endFlag ? 1440: 0))
@@ -71,19 +71,19 @@ struct Stage2_Main: View {
                 Image("stage2_say")
                     .resizable()
                     .scaledToFit()
-                    .frame(width:300)
-                    .offset(x:-400,y:-160)
+                    .frame(width: 300)
+                    .offset(x: -400, y: -160)
                     .isHidden(endFlag)
                 
                 Image("stage2_backdum")
                     .resizable()
                     .scaledToFit()
-                    .offset(x:0,y:0)
+                    .offset(x: 0, y: 0)
                 
                 Button(action:{}) {
                     Image("stage2_button")
                 }
-                .offset(x:0,y:200)
+                .offset(x: 0, y: 200)
                 .simultaneousGesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged({ _ in
