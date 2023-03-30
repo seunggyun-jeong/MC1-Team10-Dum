@@ -6,9 +6,7 @@ import SwiftUI
 struct Stage1_Main: View {
     
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
-    
-    @State private var deadFlag
-    
+
     
     var body: some View{
         
