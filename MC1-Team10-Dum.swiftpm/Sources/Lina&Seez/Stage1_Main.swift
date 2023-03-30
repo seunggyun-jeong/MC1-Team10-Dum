@@ -6,7 +6,7 @@ import SwiftUI
 struct Stage1_Main: View {
     
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
-    
+
     
     var body: some View{
         
@@ -44,7 +44,7 @@ struct Stage1_Main: View {
                     LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                 }
             }.animation(.easeInOut(duration: 1))
-
+            
             
         ZStack{
             Image("stage1Dark")
