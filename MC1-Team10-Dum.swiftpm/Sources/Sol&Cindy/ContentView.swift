@@ -14,7 +14,7 @@ struct ContentView: View {
                         .frame(width: 375)
                 }
                 
-                NavigationLink(destination: Stage2_Main()) {
+                NavigationLink(destination: Stage2_Main(SIClass: SIClass)) {
                     Image("second_stage_name")
                         .frame(width: 375)
                 }
