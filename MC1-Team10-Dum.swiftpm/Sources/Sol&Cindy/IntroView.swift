@@ -68,31 +68,6 @@ struct IntroView: View {
                     .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                     .isHidden(startFlag, remove: startFlag)
             }
-
-            Button(action: {
-                pageIndex += 1
-                if startFlag==false {
-                    startFlag = true
-                }
-                if pageIndex > 5 {
-                    endFlag = true
-                    pageIndex = 0
-                }
-                
-            }) {
-                Text("\(buttonText[pageIndex])")
-                    .foregroundColor(.white)
-                    .bold()
-                    .font(.system(size: 30))
-                    .animation(.linear(duration: 2), value: pageIndex)
-                    .isHidden(endFlag, remove: endFlag)
-                NavigationLink(destination: ContentView()) {
-                    Text("게임시작!")
-                }
-                .isHidden(!endFlag)
-                
-            }
-            .offset(y:300)
             
             Group {
                 Text("\(printText[pageIndex])")
@@ -100,6 +75,23 @@ struct IntroView: View {
                     .bold()
                     .foregroundColor(.white)
                     .animation(.easeIn(duration: 1), value: pageIndex)
+            }
+            NavigationLink(destination: ContentView()) {
+                Text("Start")
+                    .bold()
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .isHidden(!endFlag)
+        }
+        .onTapGesture {
+            pageIndex += 1
+            if startFlag==false {
+                startFlag = true
+            }
+            if pageIndex > 5 {
+                endFlag = true
+                pageIndex = 0
             }
         }
     }
