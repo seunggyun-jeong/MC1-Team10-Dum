@@ -1,6 +1,6 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by apple on 2023/03/29.
 //
@@ -17,8 +17,7 @@ struct IntroView: View {
     let titleSecondString: [CGFloat] = [-200, 0, 0, 0, 0, 0, 0]
     let titleThirdString: [CGFloat] = [-80, 0, 0, 0, 0, 0, 0]
     let titleFourthString: [CGFloat] = [-170, 0, 0, 0, 0, 0, 0]
-
-    private var buttonText: [String] = ["", "- start -", "- Next -", "- Next -", "- Next -", "- Next -", ""]
+    
     private var printText: [String] = ["", "", "3029년, 황금의 행성 '덤도라도'", "이곳에 엄청난 개발자로 성장할 수 있는 '덤덤물약'이 있다고 하는데...", "", "덤나라 용사가 최고의 개발자로 성장하기 위해 물약을 찾으러 모험을 떠난다!!", ""]
     
     @State private var pageIndex: Int = 0
@@ -26,16 +25,17 @@ struct IntroView: View {
     @State private var endFlag: Bool = false
     @State private var imageViewFlag: Bool = false
     @State private var textFlag: Bool = false
+    @State private var herodumbs: Bool = false
     
     var body: some View {
         ZStack {
-            Image("intro_background")
+            Image("background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
             Image("intro_background_effect")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+            //                .aspectRatio(contentMode: .fill)
                 .offset(y: backgroundEffectOffsetY[pageIndex])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
@@ -68,31 +68,6 @@ struct IntroView: View {
                     .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                     .isHidden(startFlag, remove: startFlag)
             }
-
-            Button(action: {
-                pageIndex += 1
-                if startFlag==false {
-                    startFlag = true
-                }
-                if pageIndex > 5 {
-                    endFlag = true
-                    pageIndex = 0
-                }
-                
-            }) {
-                Text("\(buttonText[pageIndex])")
-                    .foregroundColor(.white)
-                    .bold()
-                    .font(.system(size: 30))
-                    .animation(.linear(duration: 2), value: pageIndex)
-                    .isHidden(endFlag, remove: endFlag)
-                NavigationLink(destination: ContentView()) {
-                    Text("게임시작!")
-                }
-                .isHidden(!endFlag)
-                
-            }
-            .offset(y:300)
             
             Group {
                 Text("\(printText[pageIndex])")
@@ -100,6 +75,34 @@ struct IntroView: View {
                     .bold()
                     .foregroundColor(.white)
                     .animation(.easeIn(duration: 1), value: pageIndex)
+            }
+            
+            Image("intro_dumbs")
+                .offset(x: herodumbs ? 1200 : -1200)
+                .animation(Animation.linear(duration:5), value: herodumbs)
+            
+            NavigationLink(destination: ContentView()) {
+                Text("Start")
+                    .bold()
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .isHidden(!endFlag)
+        }
+        .onTapGesture {
+            pageIndex += 1
+            if startFlag==false {
+                startFlag = true
+            }
+            if pageIndex >= 4 {
+                herodumbs = true
+            }
+            if pageIndex > 5 {
+                endFlag = true
+                pageIndex = 0
+//                NavigationLink(destination: ContentView()) {
+//                    EmptyView()
+//                }
             }
         }
     }

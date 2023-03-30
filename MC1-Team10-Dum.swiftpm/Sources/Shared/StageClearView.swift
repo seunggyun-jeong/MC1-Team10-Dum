@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct StageClearView: View {
+    
+    @StateObject var SIClass: StageInformationClass
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @Binding var deadFlag: Bool
     @State var mentorImageName: String
     @State var mentorName: String
@@ -48,13 +53,28 @@ struct StageClearView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    NavigationLink(destination: OutroView()) {
-                        Image("nextButton")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
+                    if SIClass.stageCounter == 2 {
+                        NavigationLink(destination: OutroView()) {
+                            Image("nextButton")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                        }
+                        .disabled(!deadFlag)
+                    } else {
+                        Button {
+                            self.presentationMode.wrappedValue.dismiss()
+                            SIClass.compeleteStage()
+                        } label: {
+                            Image("nextButton")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                        }
+                        .disabled(!deadFlag)
+
                     }
-                    .disabled(!deadFlag)
+
 
                 }
             }
@@ -65,6 +85,6 @@ struct StageClearView: View {
 
 struct StageClearView_Previews: PreviewProvider {
     static var previews: some View {
-        StageClearView(deadFlag: .constant(false), mentorImageName: "GQ_monster", mentorName: "JUDY", mentorSpeak: "어색함 괴물을 물리쳤군! 수고했어!\nCBL을 위해서 가장 필요한 스킬인 소통 능력이\n 잘 장착되었길 바란다!")
+        StageClearView(SIClass: StageInformationClass(), deadFlag: .constant(false), mentorImageName: "GQ_monster", mentorName: "JUDY", mentorSpeak: "어색함 괴물을 물리쳤군! 수고했어!\nCBL을 위해서 가장 필요한 스킬인 소통 능력이\n 잘 장착되었길 바란다!")
     }
 }
