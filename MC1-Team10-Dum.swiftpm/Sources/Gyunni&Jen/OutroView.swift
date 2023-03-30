@@ -105,7 +105,7 @@ struct OutroView: View {
         .onTapGesture {
             pageIndex += 1
             if startFlag==false {
-                BgPlayer.audioPlay(name: "background", numberOfLoops: -1)
+                BgPlayer.audioPlay(name: "endBackground", numberOfLoops: -1)
                 startFlag = true
             }
             if pageIndex > 8 {
@@ -118,7 +118,7 @@ struct OutroView: View {
             if pageIndex == 4 {
                 shineFlag = true
                 shineAnimateFlag = true
-                BgPlayer.audioPlay(name: "endBackground", numberOfLoops: -1)
+                BgPlayer.audioPlay(name: "boxendBackground", numberOfLoops: -1)
             }
             if pageIndex == 5 {
                 shineFlag = false
