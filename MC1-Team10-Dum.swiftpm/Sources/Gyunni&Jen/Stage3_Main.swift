@@ -18,6 +18,7 @@ struct Stage3_Main: View {
     @State private var GAFlag: Bool = false
     @State private var MCFlag: Bool = false
     @State private var deadFlag: Bool = false
+    @State private var heroFlag: Bool = false
 
     var body: some View {
         ZStack {
@@ -53,6 +54,8 @@ struct Stage3_Main: View {
                 Image("heros")
                     .resizable()
                     .padding(.bottom, 20)
+                    .offset(y: heroFlag ? 0 : 20 )
+                    .animation(Animation.spring(response: 0.5, dampingFraction: 0.2, blendDuration: 0.1).speed(1.5), value: heroFlag)
             }
             
             // 적들의 공격 말풍선
@@ -170,7 +173,6 @@ struct Stage3_Main: View {
             .opacity(deadFlag ? 0.8 : 0.0)
         }
     }
-    
     func attackMethod(damage: Double) {
         // width가 0보다 밑으로 내려가지 않게 예외 처리
         if (currentHP - damage) <= 0.0 {
@@ -183,16 +185,19 @@ struct Stage3_Main: View {
         if !GQFlag && currentHP <= 700 {
             GQFlag.toggle()
             currentHP += 300
+            heroFlag.toggle()
         }
         
         if !GAFlag && currentHP <= 500 {
             GAFlag.toggle()
             currentHP += 300
+            heroFlag.toggle()
         }
         
         if !MCFlag && currentHP <= 100 {
             MCFlag.toggle()
             currentHP += 500
+            heroFlag.toggle()
         }
         
         if currentHP <= 0 {
@@ -201,7 +206,6 @@ struct Stage3_Main: View {
         }
     }
 }
-
 
 struct Stage3_Main_Previews: PreviewProvider {
     static var previews: some View {
