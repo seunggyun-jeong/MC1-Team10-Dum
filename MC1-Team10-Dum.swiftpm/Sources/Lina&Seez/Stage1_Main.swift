@@ -15,6 +15,10 @@ struct Stage1_Main: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
+            Image("Stage_transparent")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
             Image("monsterName")
                 .resizable()
                 .scaledToFit()
