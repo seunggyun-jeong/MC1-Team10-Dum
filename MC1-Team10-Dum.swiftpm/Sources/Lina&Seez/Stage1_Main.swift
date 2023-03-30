@@ -5,8 +5,9 @@ import SwiftUI
 
 struct Stage1_Main: View {
     
+    @StateObject var SIClass: StageInformationClass
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
-    @State private var deadFlag: Bool = false
+    @State private var deadFlag: Bool = true
     
     var body: some View{
         
@@ -47,7 +48,7 @@ struct Stage1_Main: View {
 
             
            
-            StageClearView(deadFlag: $deadFlag, mentorImageName: "judyMonster", mentorName: "JUDY", mentorSpeak: "어색함 괴물을 물리쳤군! 수고했어!\nCBL에서 필수 스킬인 소통 능력 획득으로\n원팀이 되었군!")
+            StageClearView(SIClass: SIClass, deadFlag: $deadFlag, mentorImageName: "judyMonster", mentorName: "JUDY", mentorSpeak: "어색함 괴물을 물리쳤군! 수고했어!\nCBL에서 필수 스킬인 소통 능력 획득으로\n원팀이 되었군!")
             .opacity(leafVM.countLeaf == 0  ? 0.8 : 0.0)
         }
         
@@ -64,9 +65,8 @@ struct Stage1_Main: View {
     
 }
 
-
-struct FinalView: View{
-    var body: some View{
-        Image("Stage 7")
+struct Stage1_Main_Previews: PreviewProvider {
+    static var previews: some View {
+        Stage1_Main(SIClass: StageInformationClass())
     }
 }
