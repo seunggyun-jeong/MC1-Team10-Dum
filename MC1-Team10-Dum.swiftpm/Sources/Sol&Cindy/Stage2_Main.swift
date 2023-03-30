@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct Stage2_Main: View {
+    @State private var monsterImageName: String = "stage2_iceberg"
+    
+    
     @State private var press = false
     @State private var isAnimating = false
     @State private var decibel:Double = 0
     @State private var monsterCount: Int = 5
+    @State private var monsterAttack: Bool = false
     
     @State private var timer: Timer?
     @ObservedObject var recorder = Recorder()
@@ -30,7 +34,7 @@ struct Stage2_Main: View {
                     .scaledToFit()
                     .frame(width:392)
                     .offset(x:100,y:-160)
-                Image("stage2_iceberg")
+                Image(monsterImageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width:929)
@@ -65,14 +69,21 @@ struct Stage2_Main: View {
                                 }
                                 
                                 if self.decibel > 150 {
-                                    monsterCount -= 1
                                     timer?.invalidate()
                                     recorder.stopRecording()
+                                    monsterAttack = true
+                                    if monsterCount == 3 {
+                                        monsterImageName = ""
+                                    }
                                 }
                             }
                         })
                         .onEnded( { _ in
                             isAnimating = false
+                            if monsterAttack {
+                                monsterCount -= 1
+                                monsterAttack = false
+                            }
                         })
                 )
             }
