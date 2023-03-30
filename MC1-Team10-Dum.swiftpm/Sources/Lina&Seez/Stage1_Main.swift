@@ -37,9 +37,12 @@ struct Stage1_Main: View {
             }.animation(.easeInOut(duration: 1))
 
             
-            
+        ZStack{
+            Image("stage1Dark")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+            }.opacity(leafVM.countLeaf == 0 ? 0.8 : 0.0)
         }
-        
         
         
     }
