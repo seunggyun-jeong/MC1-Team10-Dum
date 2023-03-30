@@ -12,11 +12,13 @@ struct LeafRightView: View {
     
     let index: Int
     let offset: CGSize
+    let player: AudioPlayer = AudioPlayer()
     
-    var removal: (() -> Void)? = nil
+//    var removal: (() -> Void)? = nil
     
     @State private var isDragging = false
     @State private var position=CGSize.zero
+    @State private var isLeaf = false
     
     @StateObject var leafVM:LeafViewModel
 
@@ -36,8 +38,10 @@ struct LeafRightView: View {
                     }
                     .onEnded{ _ in
                         if abs(position.width) > 100 {
-                            removal?()
+//                            removal?()
+                            isLeaf = true
                             leafVM.removeLeaf()
+                            player.audioPlay(name: "leaf", numberOfLoops: 0)
                             //print("현재 이파리 개수 는?? ---> \(leafVM.countLeaf)")
                         } else {
                             position = .zero
@@ -45,6 +49,7 @@ struct LeafRightView: View {
                         isDragging = false
                     }
             )
+            .isHidden(isLeaf)
     }
 }
 
@@ -53,11 +58,13 @@ struct LeafLeftView: View {
     
     let index: Int
     let offset: CGSize
+    let player: AudioPlayer = AudioPlayer()
    
     var removal: (() -> Void)? = nil
     
     @State private var isDragging = false
     @State private var position=CGSize.zero
+    @State private var isLeaf = false
     
     @StateObject var leafVM:LeafViewModel
     
@@ -76,8 +83,10 @@ struct LeafLeftView: View {
                     }
                     .onEnded{ _ in
                         if abs(position.width) > 100 {
-                            removal?()
+//                            removal?()
+                            isLeaf = true
                             leafVM.removeLeaf()
+                            player.audioPlay(name: "leaf", numberOfLoops: 0)
                             //print("현재 이파리 개수 는?? ---> \(leafVM.countLeaf)")
                         } else {
                             position = .zero
@@ -85,6 +94,7 @@ struct LeafLeftView: View {
                         isDragging = false
                     }
             )
+            .isHidden(isLeaf)
     }
 }
 

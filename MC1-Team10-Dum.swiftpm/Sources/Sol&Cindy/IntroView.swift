@@ -19,7 +19,7 @@ struct IntroView: View {
     let titleThirdString: [CGFloat] = [-80, 0, 0, 0, 0, 0, 0]
     let titleFourthString: [CGFloat] = [-170, 0, 0, 0, 0, 0, 0]
     
-    let player: audioPlayer = audioPlayer()
+    let player: AudioPlayer = AudioPlayer()
     
     private var printText: [String] = ["", "", "3313년, 황금의 행성 '덤도라도'", "이곳에 엄청난 개발자로 성장할 수 있는 '덤덤물약'이 있다고 하는데...", "", "덤나라 용사가 최고의 개발자로 성장하기 위해 물약을 찾으러 모험을 떠난다!!", ""]
     
@@ -37,7 +37,7 @@ struct IntroView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .onAppear {
-                    player.audioPlay(name: "Bg_monster")
+                    player.audioPlay(name: "background", numberOfLoops: -1)
                 }
             
             Image("intro_background_effect")
@@ -81,6 +81,11 @@ struct IntroView: View {
                     .bold()
                     .foregroundColor(.white)
                     .animation(.easeIn(duration: 1), value: pageIndex)
+                    .onChange(of: pageIndex) { _ in
+                        if printText[pageIndex] != "" {
+                            player.audioPlay(name: "typing", numberOfLoops: 0)
+                        }
+                    }
             }
             
             Image("intro_dumbs")
@@ -119,22 +124,5 @@ struct IntroView_Previews: PreviewProvider {
     static var previews: some View {
         IntroView()
     }
-}
-
-class audioPlayer {
-    
-    var player: AVAudioPlayer?
-    
-    func audioPlay(name: String) {
-        let url = Bundle.main.url(forResource: name, withExtension: "mp3")!
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.numberOfLoops = -1 // -1로 설정하면 무한반복
-            player?.play()
-        } catch {
-            print("error loading file")
-        }
-    }
-
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StageClearView: View {
-    
+    let player: AudioPlayer = AudioPlayer()
     @StateObject var SIClass: StageInformationClass
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -61,6 +61,9 @@ struct StageClearView: View {
                                 .frame(width: 200)
                         }
                         .disabled(!deadFlag)
+                        .onChange(of: deadFlag) { _ in
+                            player.audioPlay(name: "nextButton", numberOfLoops: 0)
+                        }
                     } else {
                         Button {
                             self.presentationMode.wrappedValue.dismiss()
@@ -72,6 +75,9 @@ struct StageClearView: View {
                                 .frame(width: 200)
                         }
                         .disabled(!deadFlag)
+                        .onChange(of: deadFlag) { _ in
+                            player.audioPlay(name: "nextButton", numberOfLoops: 0)
+                        }
 
                     }
 

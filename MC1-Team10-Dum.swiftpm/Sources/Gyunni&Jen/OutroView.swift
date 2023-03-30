@@ -12,7 +12,7 @@ struct OutroView: View {
     let planetFrameWidth: [CGFloat] = [400, 500, 1000]
     let planetOffsetY: [CGFloat] = [-100, 15, 500, 500]
     
-    
+    let BgPlayer: AudioPlayer = AudioPlayer()
     private var printText: [String] = ["", "당신은 모든 스테이지를 클리어 했습니다.", "이제, 드디어 덤도라도에 도착하였습니다.", "덤도라도에서 덤덤물약이 담겨있다는 보물상자를 찾았다!", "", "알고보니 전설의 덤덤물약은 없었다고 한다...\n하지만 CBL과 협동심, 그리고 동료들을 얻었다.!!", ""]
     private var boxImage: [String] = ["", "", "", "box_closed 1", "box_opened 1", ""]
     
@@ -38,6 +38,7 @@ struct OutroView: View {
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
                     pageIndex += 1
+                    BgPlayer.audioPlay(name: "monster", numberOfLoops: -1)
                 }
             
             Image("intro_planet")

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Stage3_Main: View {
+    let player: AudioPlayer = AudioPlayer()
     
     @StateObject var SIClass: StageInformationClass
     
@@ -50,6 +51,9 @@ struct Stage3_Main: View {
             .padding(.bottom, 200)
             .rotationEffect(animationFlag ? .degrees(0) : .degrees(3))
             .animation(.linear.repeatCount(5).speed(5), value: animationFlag)
+            .onAppear {
+                player.audioPlay(name: "monster", numberOfLoops: 1)
+            }
             
             // 바닥에 용사들 모임
             VStack {
@@ -173,6 +177,9 @@ struct Stage3_Main: View {
             
             StageClearView(SIClass: SIClass, deadFlag: $deadFlag, mentorImageName: "LeeO 1", mentorName: "LEEO", mentorSpeak: "최종 보스 MC1, GQ, GA 괴물을 물리쳤군! 수고했어!\nCBL을 진행하면서 심장이 뛰는 일에 도전해봤으니\n여러분들은 어떤 챌린지든 해낼 수 있는 용사들이야!")
             .opacity(deadFlag ? 0.8 : 0.0)
+            .onChange(of: deadFlag) { _ in
+                player.audioPlay(name: "mentor", numberOfLoops: 0)
+            }
         }
         .navigationBarHidden(true)
     }
@@ -206,7 +213,6 @@ struct Stage3_Main: View {
         
         if currentHP <= 0 {
             deadFlag = true
-            print("으앙 주금")
         }
     }
 }
