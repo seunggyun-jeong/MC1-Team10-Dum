@@ -20,7 +20,7 @@ let package = Package(
             teamIdentifier: "G7X65ZSJ3J",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .earth),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.brown),
             supportedDeviceFamilies: [
                 .pad,
@@ -33,14 +33,19 @@ let package = Package(
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .microphone(purposeString: "Unknown Usage Description")
+                .microphone(purposeString: "Unknown Usage Description"),
+                .mediaLibrary(purposeString: "Unknown Usage Description"),
+                .fileAccess(.musicFolder, mode: .readOnly)
             ]
         )
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            path: ".",
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )

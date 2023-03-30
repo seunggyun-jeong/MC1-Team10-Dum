@@ -44,7 +44,7 @@ struct Stage1_Main: View {
                     LeafRightView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                     LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                 }
-            }.animation(.easeInOut(duration: 1))
+            }.animation(.easeInOut(duration: 1), value: leafVM.countLeaf)
 
             
            
