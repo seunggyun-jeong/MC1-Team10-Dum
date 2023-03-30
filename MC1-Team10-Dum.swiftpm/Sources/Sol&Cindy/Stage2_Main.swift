@@ -58,8 +58,6 @@ struct Stage2_Main: View {
                     .scaledToFit()
                     .offset(x:0,y:220)
                 
-                Text(press ? "누르고 있습니다 \(monsterCount) \(decibel)" : "누르고 있지 않습니다 \(monsterCount) \(decibel)")
-                
                 Button(action:{}) {
                     Image("stage2_button")
                 }
