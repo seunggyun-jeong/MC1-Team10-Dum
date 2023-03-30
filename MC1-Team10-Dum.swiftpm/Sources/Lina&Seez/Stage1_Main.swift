@@ -6,7 +6,7 @@ import SwiftUI
 struct Stage1_Main: View {
     
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
-
+    @State private var deadFlag: Bool = false
     
     var body: some View{
         
@@ -14,6 +14,10 @@ struct Stage1_Main: View {
             Image("spaceAwkward")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
+            
+            Image("Stage_transparent")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             
             Image("monsterName")
                 .resizable()
@@ -28,6 +32,11 @@ struct Stage1_Main: View {
                 .rotationEffect(leafVM.countLeaf == 0 ? .degrees(3) : .degrees(0))
                 .animation(.linear.repeatForever().speed(5), value: leafVM.countLeaf)
             
+            Image("speechBubble")
+                .resizable()
+                .scaledToFit()
+                .offset(x: -200, y:-140)
+                .opacity( leafVM.countLeaf <= 2  ? 0.8 : 0.0)
             
             GeometryReader { proxy in
                 ForEach(0...4, id:\.self) { index in
@@ -36,9 +45,10 @@ struct Stage1_Main: View {
                 }
             }.animation(.easeInOut(duration: 1))
             
-            
+           
+            StageClearView(deadFlag: $deadFlag, mentorImageName: "judyMonster", mentorName: "JUDY", mentorSpeak: "어색함 괴물을 물리쳤군! 수고했어!\nCBL에서 필수 스킬인 소통 능력 획득으로\n원팀이 되었군!")
+            .opacity(leafVM.countLeaf == 0  ? 0.8 : 0.0)
         }
-        
         
         
     }
