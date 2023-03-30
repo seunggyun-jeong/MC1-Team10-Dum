@@ -13,8 +13,8 @@ struct OutroView: View {
     let planetOffsetY: [CGFloat] = [-100, 15, 500, 500]
     
     
-    private var printText: [String] = ["", "당신은 모든 스테이지를 클리어 했습니다.", "이제, 드디어 덤도라도에 도착하였습니다.", "덤도라도에서 덤덤물약이 담겨있다는 보물상자를 찾았다!", "", "덤나라 용사가 최고의 개발자로 성장하기 위해 물약을 찾으러 모험을 떠난다!!", ""]
-    private var boxImage: [String] = ["", "", "", "box_closed 1", "box_opened 1", "box_opened 1"]
+    private var printText: [String] = ["", "당신은 모든 스테이지를 클리어 했습니다.", "이제, 드디어 덤도라도에 도착하였습니다.", "덤도라도에서 덤덤물약이 담겨있다는 보물상자를 찾았다!", "", "알고보니 전설의 덤덤물약은 없었다고 한다...\n하지만 CBL과 협동심, 그리고 동료들을 얻었다.!!", ""]
+    private var boxImage: [String] = ["", "", "", "box_closed 1", "box_opened 1", ""]
     
     @State private var pageIndex: Int = 0
     @State private var startFlag: Bool = false
@@ -23,10 +23,12 @@ struct OutroView: View {
     @State private var boxFlag: Bool = false
     @State private var shineFlag: Bool = false
     @State private var shineAnimateFlag: Bool = false
+    @State private var heroAnimateFlag: Bool = false
+    @State private var rotation = 270.0
     
     var body: some View {
         ZStack {
-            Image("intro_background")
+            Image(pageIndex >= 5 ? "galaxy" : "intro_background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
@@ -48,13 +50,15 @@ struct OutroView: View {
                 .animation(.linear(duration: 1), value: planetOffsetY[min(3,pageIndex)])
             ZStack {
                 VStack {
-                    Text("\(printText[pageIndex])")
+                    Text("\(printText[min(6,pageIndex)])")
                         .font(.system(size: 30))
                         .bold()
+                        .multilineTextAlignment(.center)
                         .foregroundColor(.white)
-                        .animation(.easeIn(duration: 1), value: pageIndex)
+                        .animation(.easeIn(duration: 0.5), value: pageIndex)
+                        .opacity(rotation >= 550 ? 0 : 1.0 )
                     
-                    Image(boxImage[pageIndex])
+                    Image(boxImage[min(5,pageIndex)])
                         .resizable()
                         .scaledToFit()
                         .frame(width: 500)
@@ -63,29 +67,60 @@ struct OutroView: View {
                 }
                 Image("shining_effect")
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .rotationEffect(.degrees(shineAnimateFlag ? 0 : 360))
                     .animation(.linear.repeatForever().speed(0.1), value: shineAnimateFlag)
                     .opacity(shineFlag ? 1.0 : 0)
-                    
+                    .offset(y:60)
             }
-
+            ZStack {
+                if pageIndex >= 5  {
+                    Image("heroOnPlanet")
+                        .resizable()
+                        .scaledToFit()
+                        .offset(y: 350)
+                        .rotationEffect(.degrees(rotation), anchor:.bottom)
+                        .animation(.linear.repeatForever().speed(0.1), value:heroAnimateFlag)
+                }
+                Image("theEnd")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width:400)
+                    .opacity(rotation >= 550 ? 1.0 : 0)
+                    .offset(y:-50)
+                Slider(value: $rotation, in: 270...550, step: 1.0)
+                    .opacity(pageIndex >= 5 ? 1.0 : 0)
+                    .offset(y:200)
+                    .frame(width: 400)
+                Image("pushHeroGuide")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 400)
+                    .offset(y:280)
+                    .opacity(pageIndex >= 5 ? 1.0 : 0)
+            }
+            
         }
         .onTapGesture {
             pageIndex += 1
             if startFlag==false {
                 startFlag = true
             }
-            if pageIndex > 5 {
+            if pageIndex > 8 {
                 endFlag = true
                 pageIndex = 0
             }
             if pageIndex > 2 {
                 boxFlag = true
             }
-            if pageIndex > 4 {
+            if pageIndex == 4 {
                 shineFlag = true
                 shineAnimateFlag = true
+            }
+            if pageIndex == 5 {
+                shineFlag = false
+                shineAnimateFlag = false
+                heroAnimateFlag = true
             }
         }
     }
