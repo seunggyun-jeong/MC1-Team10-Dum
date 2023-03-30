@@ -32,6 +32,11 @@ struct Stage1_Main: View {
                 .rotationEffect(leafVM.countLeaf == 0 ? .degrees(3) : .degrees(0))
                 .animation(.linear.repeatForever().speed(5), value: leafVM.countLeaf)
             
+            Image("speechBubble")
+                .resizable()
+                .scaledToFit()
+                .offset(x: -200, y:-140)
+                .animation(.linear.repeatForever().speed(5), value: leafVM.countLeaf)
             
             GeometryReader { proxy in
                 ForEach(0...4, id:\.self) { index in
