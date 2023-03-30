@@ -127,7 +127,6 @@ class audioPlayer {
     
     func audioPlay(name: String) {
         let url = Bundle.main.url(forResource: name, withExtension: "mp3")!
-//        let url = URL(fileURLWithPath: path)
         do {
             player = try AVAudioPlayer(contentsOf: url)
             player?.numberOfLoops = -1 // -1로 설정하면 무한반복
