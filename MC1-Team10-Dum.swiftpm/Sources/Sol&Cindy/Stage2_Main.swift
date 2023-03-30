@@ -31,21 +31,39 @@ struct Stage2_Main: View {
                 .aspectRatio(contentMode: .fill)
              
             ZStack {
+                
                 Image("stage2_name")
                     .resizable()
                     .scaledToFit()
                     .frame(width:392)
                     .offset(x:100,y:-160)
                     .isHidden(endFlag)
-                
-                Image(monsterImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: endFlag ? 0: 929)
-                    .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
-                    .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
-                    .rotationEffect(.degrees(endFlag ? 1440: 0))
-                    .animation(.linear(duration: 3), value: endFlag)
+                VStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 50)
+                            .foregroundColor(Color.white)
+                            .border(.black)
+                            .frame(width: 400, height: 34)
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 50)
+                                .foregroundColor(Color.blue)
+                            .frame(width: decibel, height: 20)
+                            .animation(.spring(), value: decibel)
+                        }
+                        .frame(width: 390, height: 20, alignment: .leading)
+                    }
+                    .isHidden(endFlag)
+
+                    Image(monsterImageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: endFlag ? 0: 929)
+                        .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
+                        .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
+                        .rotationEffect(.degrees(endFlag ? 1440: 0))
+                        .animation(.linear(duration: 3), value: endFlag)
+                }
                     
                 Image("stage2_say")
                     .resizable()
