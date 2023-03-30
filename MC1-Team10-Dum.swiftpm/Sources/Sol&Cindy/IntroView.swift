@@ -31,13 +31,13 @@ struct IntroView: View {
     
     var body: some View {
         ZStack {
-            Image("intro_background")
+            Image("background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
             Image("intro_background_effect")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+//                .aspectRatio(contentMode: .fill)
                 .offset(y: backgroundEffectOffsetY[pageIndex])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
@@ -74,7 +74,6 @@ struct IntroView: View {
                     .offset(y: titleFourthString[pageIndex])
                     .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                     .isHidden(startFlag, remove: startFlag)
-
                 }
 
             Button(action: {
@@ -112,6 +111,23 @@ struct IntroView: View {
                     .bold()
                     .foregroundColor(.white)
                     .animation(.easeIn(duration: 1), value: pageIndex)
+            }
+            NavigationLink(destination: ContentView()) {
+                Text("Start")
+                    .bold()
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .isHidden(!endFlag)
+        }
+        .onTapGesture {
+            pageIndex += 1
+            if startFlag==false {
+                startFlag = true
+            }
+            if pageIndex > 5 {
+                endFlag = true
+                pageIndex = 0
             }
         }
     }
