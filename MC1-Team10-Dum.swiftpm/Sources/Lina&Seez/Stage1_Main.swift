@@ -6,9 +6,7 @@ import SwiftUI
 struct Stage1_Main: View {
     
     @StateObject var leafVM:LeafViewModel = LeafViewModel()
-    
-    @State private var deadFlag
-    
+
     
     var body: some View{
         
@@ -37,13 +35,6 @@ struct Stage1_Main: View {
                     LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                 }
             }.animation(.easeInOut(duration: 1))
-            
-            ZStack{
-                Image("result")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            }
-            .opacity(deadFlag ? 0.8:0.0)
             
             
         }
