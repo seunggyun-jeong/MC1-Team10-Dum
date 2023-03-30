@@ -38,13 +38,6 @@ struct Stage1_Main: View {
                 }
             }.animation(.easeInOut(duration: 1))
             
-            ZStack{
-                Image("result")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            }
-            .opacity(deadFlag ? 0.8:0.0)
-            
             
         }
         
