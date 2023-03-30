@@ -54,7 +54,7 @@ class Recorder: NSObject, ObservableObject {
     func updateDecibels() -> Double {
         audioRecorder.updateMeters()
         let decibels = audioRecorder.peakPower(forChannel: 0)
-        self.decibels = Double(decibels) + 160
+        self.decibels = (Double(decibels) + 160) * 2
         return self.decibels
     }
 }
