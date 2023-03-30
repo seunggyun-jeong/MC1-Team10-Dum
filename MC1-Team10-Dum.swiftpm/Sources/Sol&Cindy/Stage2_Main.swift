@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct Stage2_Main: View {
+    @State private var monsterImageName: String = "stage2_iceberg"
+    
+    
     @State private var press = false
     @State private var isAnimating = false
+    @State private var decibel:Double = 0
+    @State private var monsterCount: Int = 5
+    @State private var monsterAttack: Bool = false
+    @State private var endFlag = false
+    
+    @State private var timer: Timer?
+    @ObservedObject var recorder = Recorder()
     
     var body: some View {
         ZStack {
@@ -25,26 +35,31 @@ struct Stage2_Main: View {
                     .scaledToFit()
                     .frame(width:392)
                     .offset(x:100,y:-160)
-                Image("stage2_iceberg")
+                    .isHidden(endFlag)
+                
+                Image(monsterImageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width:929)
+                    .frame(width: endFlag ? 0: 929)
                     .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
-                    .animation(Animation.easeInOut(duration:0.3)
-                        .repeatForever(autoreverses: true))
-                        .onAppear {
-                                    self.isAnimating = true
-                                    }
+                    .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
+                    .rotationEffect(.degrees(endFlag ? 1440: 0))
+                    .animation(.linear(duration: 3).speed(15), value: endFlag)
+                    
                 Image("stage2_say")
                     .resizable()
                     .scaledToFit()
                     .frame(width:300)
                     .offset(x:-400,y:-160)
-                Text(press ? "누르고 있습니다" : "누르고 있지 않습니다")
+                    .isHidden(endFlag)
+                
                 Image("stage2_backdum")
                     .resizable()
                     .scaledToFit()
                     .offset(x:0,y:220)
+                
+                Text(press ? "누르고 있습니다 \(monsterCount) \(decibel)" : "누르고 있지 않습니다 \(monsterCount) \(decibel)")
+                
                 Button(action:{}) {
                     Image("stage2_button")
                 }
@@ -52,14 +67,42 @@ struct Stage2_Main: View {
                 .simultaneousGesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged({ _ in
-                            self.press = true
+                            recorder.startRecording()
+                            self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                                self.decibel = recorder.updateDecibels()
+                                
+                                if self.decibel > 100 {
+                                    isAnimating = true
+                                }
+                                
+                                if self.decibel > 150 {
+                                    timer?.invalidate()
+                                    recorder.stopRecording()
+                                    monsterAttack = true
+                                    if monsterCount == 3 {
+                                        monsterImageName = "stage2_iceberg_attack"
+                                    }
+                                }
+                            }
                         })
-                        .onEnded({ _ in
-                            self.press = false
+                        .onEnded( { _ in
+                            isAnimating = false
+                            timer?.invalidate()
+                            recorder.stopRecording()
+                            if monsterAttack {
+                                monsterCount -= 1
+                                monsterAttack = false
+                            }
+                            if monsterCount == 1 {
+                                endFlag = true
+                            }
                         })
                 )
             }
         }
+    }
+    func isAttackAnimation(isAnimation: Bool) -> Animation {
+        return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.1)
     }
 }
 
