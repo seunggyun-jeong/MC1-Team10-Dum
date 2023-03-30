@@ -19,6 +19,7 @@ struct ContentView: View {
                     Image("third_stage_name")
                 }
             }
+            .padding()
         }
 
     }

@@ -97,7 +97,7 @@ struct Stage2_Main: View {
                         })
                 )
             }
-            StageClearView(deadFlag: $endFlag, mentorImageName: "DORA 1", mentorName: "DORA", mentorSpeak: "8시간 회의 괴물을 물리쳤군! 수고했어! CBL이 잘 진행되기 위해서는 팀원들과 휴식시간을 가지며 아이스 브레이킹 하는 것도 중요하지!!")
+            StageClearView(deadFlag: $endFlag, mentorImageName: "Dora 1", mentorName: "DORA", mentorSpeak: "8시간 회의 괴물을 물리쳤군! 수고했어! CBL이 잘 진행되기 위해서는 팀원들과 휴식시간을 가지며 아이스 브레이킹 하는 것도 중요하지!!")
             .opacity(endFlag ? 0.8 : 0.0)
             .animation(.linear(duration: 3), value: endFlag)
         }
