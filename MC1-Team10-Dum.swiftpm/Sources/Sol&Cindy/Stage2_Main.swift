@@ -20,34 +20,53 @@ struct Stage2_Main: View {
     @State private var monsterCount: Int = 5
     @State private var monsterAttack: Bool = false
     @State private var endFlag = false
+    @State private var isPush = false
     
     @State private var timer: Timer?
     @ObservedObject var recorder = Recorder()
     
     var body: some View {
         ZStack {
-            Image("stage2_background")
+            Image("background")
                 .resizable()
             Image("stage2_cloud")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
              
             ZStack {
+                
                 Image("stage2_name")
                     .resizable()
                     .scaledToFit()
                     .frame(width:392)
                     .offset(x:100,y:-160)
                     .isHidden(endFlag)
-                
-                Image(monsterImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: endFlag ? 0: 929)
-                    .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
-                    .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
-                    .rotationEffect(.degrees(endFlag ? 1440: 0))
-                    .animation(.linear(duration: 3), value: endFlag)
+                VStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 50)
+                            .foregroundColor(Color.white)
+                            .border(.black)
+                            .frame(width: 400, height: 34)
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 50)
+                                .foregroundColor(Color.blue)
+                            .frame(width: decibel, height: 20)
+                            .animation(.spring(), value: decibel)
+                        }
+                        .frame(width: 390, height: 20, alignment: .leading)
+                    }
+                    .isHidden(endFlag)
+
+                    Image(monsterImageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: endFlag ? 0: 929)
+                        .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
+                        .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
+                        .rotationEffect(.degrees(endFlag ? 1440: 0))
+                        .animation(.linear(duration: 3), value: endFlag)
+                }
                     
                 Image("stage2_say")
                     .resizable()
@@ -59,9 +78,7 @@ struct Stage2_Main: View {
                 Image("stage2_backdum")
                     .resizable()
                     .scaledToFit()
-                    .offset(x:0,y:220)
-                
-                Text(press ? "누르고 있습니다 \(monsterCount) \(decibel)" : "누르고 있지 않습니다 \(monsterCount) \(decibel)")
+                    .offset(x:0,y:0)
                 
                 Button(action:{}) {
                     Image("stage2_button")
@@ -71,9 +88,9 @@ struct Stage2_Main: View {
                     DragGesture(minimumDistance: 0)
                         .onChanged({ _ in
                             recorder.startRecording()
+                            self.isPush = true
                             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                                 self.decibel = recorder.updateDecibels()
-                                
                                 if self.decibel > 50 {
                                     isAnimating = true
                                 }
@@ -90,6 +107,7 @@ struct Stage2_Main: View {
                         })
                         .onEnded( { _ in
                             recorder.stopRecording()
+                            isPush = false
                             if monsterAttack {
                                 monsterCount -= 1
                                 monsterAttack = false
@@ -101,6 +119,15 @@ struct Stage2_Main: View {
                 )
             }
             StageClearView(SIClass : SIClass, deadFlag: $endFlag, mentorImageName: "DORA 1", mentorName: "DORA", mentorSpeak: "8시간 회의 괴물을 물리쳤군! 수고했어! CBL이 잘 진행되기 위해서는 팀원들과 휴식시간을 가지며 아이스 브레이킹 하는 것도 중요하지!!")
+            
+            Image("stage2_speak")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 340)
+                .offset(x: 450, y: 180)
+                .isHidden(!isPush)
+            
+            StageClearView(deadFlag: $endFlag, mentorImageName: "Dora 1", mentorName: "DORA", mentorSpeak: "8시간 회의 괴물을 물리쳤군! 수고했어!\nCBL이 잘 진행되기 위해서는 팀원들과 휴식시간을\n가지며 아이스 브레이킹 하는 것도 중요하지!!")
             .opacity(endFlag ? 0.8 : 0.0)
             .animation(.linear(duration: 3), value: endFlag)
         }

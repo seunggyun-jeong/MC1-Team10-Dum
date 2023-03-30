@@ -26,21 +26,28 @@ struct IntroView: View {
     @State private var endFlag: Bool = false
     @State private var imageViewFlag: Bool = false
     @State private var textFlag: Bool = false
+//    @State private var offset: CGFloat = -1400
+    @State private var herodumbs: Bool = false
     
     var body: some View {
         ZStack {
-            Image("intro_background")
+            Image("background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
             Image("intro_background_effect")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+//                .aspectRatio(contentMode: .fill)
                 .offset(y: backgroundEffectOffsetY[pageIndex])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
                     pageIndex += 1
+                    
                 }
+            Image("intro_dumbs")
+                .offset(x: herodumbs ? 1200 : -1200)
+                .animation(Animation.linear(duration:5))
+                
             
             Image("intro_planet")
                 .resizable()
@@ -67,7 +74,7 @@ struct IntroView: View {
                     .offset(y: titleFourthString[pageIndex])
                     .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                     .isHidden(startFlag, remove: startFlag)
-            }
+                }
 
             Button(action: {
                 pageIndex += 1
@@ -77,6 +84,10 @@ struct IntroView: View {
                 if pageIndex > 5 {
                     endFlag = true
                     pageIndex = 0
+                }
+                if pageIndex >= 4 {
+                    herodumbs = true
+                    
                 }
                 
             }) {
@@ -100,6 +111,23 @@ struct IntroView: View {
                     .bold()
                     .foregroundColor(.white)
                     .animation(.easeIn(duration: 1), value: pageIndex)
+            }
+            NavigationLink(destination: ContentView()) {
+                Text("Start")
+                    .bold()
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .isHidden(!endFlag)
+        }
+        .onTapGesture {
+            pageIndex += 1
+            if startFlag==false {
+                startFlag = true
+            }
+            if pageIndex > 5 {
+                endFlag = true
+                pageIndex = 0
             }
         }
     }

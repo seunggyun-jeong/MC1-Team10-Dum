@@ -5,7 +5,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Image("stage2_background")
+            Image("background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             HStack {
