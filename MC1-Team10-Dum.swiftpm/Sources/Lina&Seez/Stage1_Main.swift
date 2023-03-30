@@ -15,6 +15,10 @@ struct Stage1_Main: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
+            Image("Stage_transparent")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
             Image("monsterName")
                 .resizable()
                 .scaledToFit()
@@ -35,12 +39,14 @@ struct Stage1_Main: View {
                     LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
                 }
             }.animation(.easeInOut(duration: 1))
+
             
-            
-            
-            
+        ZStack{
+            Image("stage1Dark")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+            }.opacity(leafVM.countLeaf == 0 ? 0.8 : 0.0)
         }
-        
         
         
     }
@@ -56,4 +62,8 @@ struct Stage1_Main: View {
 }
 
 
-
+struct FinalView: View{
+    var body: some View{
+        Image("Stage 7")
+    }
+}
