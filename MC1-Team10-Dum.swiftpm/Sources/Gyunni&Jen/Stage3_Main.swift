@@ -166,45 +166,7 @@ struct Stage3_Main: View {
             .padding(.top, 50)
             .padding(.bottom, 200)
             
-            // 퀘스트 클리어 시 아웃트로
-            ZStack {
-                Rectangle()
-                    .foregroundColor(.black)
-                
-                HStack(spacing: 30) {
-                    VStack {
-                        Image("GQ_monster")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                        Text("Mentor. JUDY")
-                            .foregroundColor(.white)
-                            .font(.system(size: 30))
-                            .bold()
-                    }
-                    
-                    Text("어색함 괴물을 물리쳤군! 수고했어!\nCBL을 위해서 가장 필요한 스킬인 소통 능력이\n 잘 장착되었길 바란다!")
-                        .foregroundColor(.white)
-                        .font(.system(size: 30))
-                        .bold()
-                }
-                
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        NavigationLink(destination: OutroView()) {
-                            Image("nextButton")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200)
-                        }
-                        .disabled(!deadFlag)
-
-                    }
-                }
-                .padding([.bottom, .trailing], 50)
-            }
+            StageClearView(deadFlag: $deadFlag, mentorImageName: "LeeO 1", mentorName: "LEEO", mentorSpeak: "최종 보스 MC1, GQ,GA 괴물을 물리쳤군! 수고했어!\nCBL을 진행하면서 도전하며 배우는 법을 배웠으니\n여러분들은 어떤 챌린지든 해낼 수 있는 용사들이야!")
             .opacity(deadFlag ? 0.8 : 0.0)
         }
     }
