@@ -52,10 +52,9 @@ struct Stage1_Main: View {
             .opacity(leafVM.countLeaf == 0  ? 0.8 : 0.0)
             .animation(.linear(duration: 3), value: leafVM.countLeaf==0)
         }
-        
-        
+        .navigationBarHidden(true)
     }
-    
+        
     func logicalFunction(size: CGSize) -> CGSize {
         let width: CGFloat = CGFloat.random(in: -120...200)
         let height: CGFloat = CGFloat.random(in: -100...200)

@@ -129,6 +129,7 @@ struct Stage2_Main: View {
             .opacity(endFlag ? 0.8 : 0.0)
             .animation(.linear(duration: 3), value: endFlag)
         }
+        .navigationBarHidden(true)
     }
     func isAttackAnimation(isAnimation: Bool) -> Animation {
         return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.1).repeatCount(4)

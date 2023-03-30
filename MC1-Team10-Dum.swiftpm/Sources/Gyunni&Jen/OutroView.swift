@@ -26,13 +26,12 @@ struct OutroView: View {
     
     var body: some View {
         ZStack {
-            Image("intro_background")
+            Image("background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             
             Image("intro_background_effect")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
                 .offset(y: backgroundEffectOffsetY[min(3,pageIndex)])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
@@ -88,6 +87,7 @@ struct OutroView: View {
                 shineAnimateFlag = true
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
