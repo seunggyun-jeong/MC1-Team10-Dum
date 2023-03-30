@@ -18,6 +18,7 @@ class AudioPlayer {
             player?.numberOfLoops = numberOfLoops // -1로 설정하면 무한반복
             player?.play()
         } catch {
+            print("\(name)")
             print("error loading file")
         }
     }

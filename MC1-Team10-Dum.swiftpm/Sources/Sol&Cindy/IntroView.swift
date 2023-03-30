@@ -19,7 +19,8 @@ struct IntroView: View {
     let titleThirdString: [CGFloat] = [-80, 0, 0, 0, 0, 0, 0]
     let titleFourthString: [CGFloat] = [-170, 0, 0, 0, 0, 0, 0]
     
-    let player: AudioPlayer = AudioPlayer()
+    let BgPlayer: AudioPlayer = AudioPlayer()
+    let Player: AudioPlayer = AudioPlayer()
     
     private var printText: [String] = ["", "", "3313년, 황금의 행성 '덤도라도'", "이곳에 엄청난 개발자로 성장할 수 있는 '덤덤물약'이 있다고 하는데...", "", "덤나라 용사가 최고의 개발자로 성장하기 위해 물약을 찾으러 모험을 떠난다!!", ""]
     
@@ -37,7 +38,7 @@ struct IntroView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .onAppear {
-                    player.audioPlay(name: "background", numberOfLoops: -1)
+                    BgPlayer.audioPlay(name: "background", numberOfLoops: -1)
                 }
             
             Image("intro_background_effect")
@@ -83,7 +84,7 @@ struct IntroView: View {
                     .animation(.easeIn(duration: 1), value: pageIndex)
                     .onChange(of: pageIndex) { _ in
                         if printText[pageIndex] != "" {
-                            player.audioPlay(name: "typing", numberOfLoops: 0)
+                            Player.audioPlay(name: "typing", numberOfLoops: 0)
                         }
                     }
             }
@@ -99,14 +100,18 @@ struct IntroView: View {
                     .font(.system(size: 17))
             }
             .isHidden(!endFlag)
+            .onChange(of: endFlag) { _ in
+                BgPlayer.audioStop()
+            }
         }
         .onTapGesture {
             pageIndex += 1
             if startFlag==false {
                 startFlag = true
             }
-            if pageIndex >= 4 {
+            if pageIndex == 4 {
                 herodumbs = true
+                Player.audioPlay(name: "walking")
             }
             if pageIndex > 5 {
                 endFlag = true

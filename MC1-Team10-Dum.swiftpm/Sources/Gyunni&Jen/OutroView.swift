@@ -38,7 +38,6 @@ struct OutroView: View {
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
                     pageIndex += 1
-                    BgPlayer.audioPlay(name: "monster", numberOfLoops: -1)
                 }
             
             Image("intro_planet")
@@ -48,6 +47,7 @@ struct OutroView: View {
                 .offset(x: -70, y: planetOffsetY[min(3,pageIndex)])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .animation(.linear(duration: 1), value: planetOffsetY[min(3,pageIndex)])
+
             ZStack {
                 VStack {
                     Text("\(printText[min(6,pageIndex)])")
@@ -72,6 +72,7 @@ struct OutroView: View {
                     .animation(.linear.repeatForever().speed(0.1), value: shineAnimateFlag)
                     .opacity(shineFlag ? 1.0 : 0)
                     .offset(y:60)
+
             }
             ZStack {
                 if pageIndex >= 5  {
@@ -104,6 +105,7 @@ struct OutroView: View {
         .onTapGesture {
             pageIndex += 1
             if startFlag==false {
+                BgPlayer.audioPlay(name: "background", numberOfLoops: -1)
                 startFlag = true
             }
             if pageIndex > 8 {
@@ -116,6 +118,7 @@ struct OutroView: View {
             if pageIndex == 4 {
                 shineFlag = true
                 shineAnimateFlag = true
+                BgPlayer.audioPlay(name: "endBackground", numberOfLoops: -1)
             }
             if pageIndex == 5 {
                 shineFlag = false
