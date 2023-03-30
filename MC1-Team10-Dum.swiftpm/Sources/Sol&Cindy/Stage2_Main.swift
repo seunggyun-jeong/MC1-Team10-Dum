@@ -44,7 +44,7 @@ struct Stage2_Main: View {
                     .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
                     .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
                     .rotationEffect(.degrees(endFlag ? 1440: 0))
-                    .animation(.linear(duration: 3).speed(15), value: endFlag)
+                    .animation(.linear(duration: 3), value: endFlag)
                     
                 Image("stage2_say")
                     .resizable()
@@ -71,23 +71,21 @@ struct Stage2_Main: View {
                             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                                 self.decibel = recorder.updateDecibels()
                                 
-                                if self.decibel > 100 {
+                                if self.decibel > 50 {
                                     isAnimating = true
                                 }
                                 
-                                if self.decibel > 150 {
-                                    timer?.invalidate()
-                                    recorder.stopRecording()
+                                if self.decibel > 100 {
                                     monsterAttack = true
                                     if monsterCount == 3 {
                                         monsterImageName = "stage2_iceberg_attack"
                                     }
+                                    isAnimating = false
+                                    return
                                 }
                             }
                         })
                         .onEnded( { _ in
-                            isAnimating = false
-                            timer?.invalidate()
                             recorder.stopRecording()
                             if monsterAttack {
                                 monsterCount -= 1
@@ -99,10 +97,13 @@ struct Stage2_Main: View {
                         })
                 )
             }
+            StageClearView(deadFlag: $endFlag, mentorImageName: "DORA 1", mentorName: "DORA", mentorSpeak: "8시간 회의 괴물을 물리쳤군! 수고했어! CBL이 잘 진행되기 위해서는 팀원들과 휴식시간을 가지며 아이스 브레이킹 하는 것도 중요하지!!")
+            .opacity(endFlag ? 0.8 : 0.0)
+            .animation(.linear(duration: 3), value: endFlag)
         }
     }
     func isAttackAnimation(isAnimation: Bool) -> Animation {
-        return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.1)
+        return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.1).repeatCount(4)
     }
 }
 
