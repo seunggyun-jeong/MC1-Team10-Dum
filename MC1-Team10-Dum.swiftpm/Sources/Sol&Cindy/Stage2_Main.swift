@@ -43,8 +43,8 @@ struct Stage2_Main: View {
                     .frame(width: endFlag ? 0: 929)
                     .offset(x: self.isAnimating ? -10 : 10, y: self.isAnimating ? -10 : 10)
                     .animation(isAttackAnimation(isAnimation: isAnimating), value: isAnimating)
-                    .rotationEffect(.degrees(endFlag ? 360: 0))
-                    .animation(.linear(duration: 1), value: endFlag)
+                    .rotationEffect(.degrees(endFlag ? 1440: 0))
+                    .animation(.linear(duration: 3).speed(15), value: endFlag)
                     
                 Image("stage2_say")
                     .resizable()
@@ -102,7 +102,7 @@ struct Stage2_Main: View {
         }
     }
     func isAttackAnimation(isAnimation: Bool) -> Animation {
-        return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.3)
+        return isAnimation ? Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true) : Animation.easeIn(duration: 0.1)
     }
 }
 
