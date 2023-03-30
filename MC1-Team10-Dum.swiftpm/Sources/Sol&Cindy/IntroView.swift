@@ -35,7 +35,6 @@ struct IntroView: View {
             
             Image("intro_background_effect")
                 .resizable()
-            //                .aspectRatio(contentMode: .fill)
                 .offset(y: backgroundEffectOffsetY[pageIndex])
                 .animation(.spring(response: 2, dampingFraction: 0.5, blendDuration: 0), value: pageIndex)
                 .onAppear {
