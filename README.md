@@ -16,9 +16,9 @@
 <table>
   <tr>
     <td align="center"><a href="https://github.com/HansolWorld"><img src="https://user-images.githubusercontent.com/76610340/175435864-1f73aef9-ec25-4e9b-bf0e-61d3a8a26d3e.png" width="200px;" alt=""/><br />엄한솔<br/ > (Sol)</td>
-    <td align="center"><a href="https://github.com/jis00ya"><img src="https://user-images.githubusercontent.com/76610340/175436187-bc4d8810-87ac-4638-b13d-ecdde80ad404.png" width="200px;" alt=""/><br />권지수<br />(Jen)</td>
+    <td align="center"><a href="https://github.com/jis00ya"><img src="https://user-images.githubusercontent.com/77708819/229389106-7df1c178-10d9-475b-b161-1c607fdd0c1d.png" width="200px;" alt=""/><br />권지수<br />(Jen)</td>
   <td align="center"><a href="https://github.com/seunggyun-jeong"><img src="https://user-images.githubusercontent.com/77708819/229360339-201cf317-7a30-49cc-be27-56583f337b19.png" width="200px;" alt=""/><br />정승균<br />(Gyunni)</td>
-          <td align="center"><a href="https://github.com/seunghoria"><img src="https://user-images.githubusercontent.com/77708819/229360622-14fe68f5-7875-4976-b359-f4fa07e64ea1.jpg" width="200px;" alt=""/><br />김승은<br />(Seez)</td>
+          <td align="center"><a href="https://github.com/seunghoria"><img src="https://user-images.githubusercontent.com/77708819/229389013-b344c8f2-57f8-43b4-bda2-59893ca070f0.png" width="200px;" alt=""/><br />김승은<br />(Seez)</td>
              <td align="center"><a href="https://github.com/venushin"><img src="https://user-images.githubusercontent.com/77708819/229360347-1d74effc-43c1-472c-903c-1f764d6a62f1.png" width="200px;" alt=""/><br />이신영<br />(Cindy)</td>
              <td align="center"><a href="https://github.com/juwonleee"><img src="https://user-images.githubusercontent.com/77708819/229360629-f0325b0c-fe9f-481b-a904-c6b0b2814702.PNG" width="200px;" alt=""/><br />이주원<br />(Lina)</td>
         </tr>
