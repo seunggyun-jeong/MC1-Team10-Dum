@@ -81,7 +81,7 @@ struct OutroView: View {
                         .scaledToFit()
                         .offset(y: 350)
                         .rotationEffect(.degrees(rotation), anchor:.bottom)
-                        .animation(.linear.repeatForever().speed(0.1), value:heroAnimateFlag)
+                        .animation(.linear.speed(0.1), value:rotation)
                 }
                 Image("theEnd")
                     .resizable()
@@ -89,7 +89,7 @@ struct OutroView: View {
                     .frame(width:400)
                     .opacity(rotation >= 550 ? 1.0 : 0)
                     .offset(y:-50)
-                Slider(value: $rotation, in: 270...550, step: 1.0)
+                Slider(value: $rotation, in: 270...550, step: 10.0)
                     .opacity(pageIndex >= 5 ? 1.0 : 0)
                     .offset(y:200)
                     .frame(width: 400)

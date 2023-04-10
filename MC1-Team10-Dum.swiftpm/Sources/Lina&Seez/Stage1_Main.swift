@@ -43,12 +43,10 @@ struct Stage1_Main: View {
                 .scaledToFit()
                 .offset(x: -200, y:-140)
                 .opacity( leafVM.countLeaf <= 2  ? 0.8 : 0.0)
-            
-            GeometryReader { proxy in
-                ForEach(0...4, id:\.self) { index in
-                    LeafRightView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
-                    LeafLeftView(index: index, offset: logicalFunction(size: proxy.size), leafVM: leafVM)
-                }
+
+            ForEach(0...4, id:\.self) { index in
+                LeafView(index: index, offset: logicalFunction(), imageDirection: "leafRight", leafVM: leafVM)
+                LeafView(index: index, offset: logicalFunction(), imageDirection: "leafLeft", leafVM: leafVM)
             }
             .animation(.easeInOut(duration: 1), value: leafVM.countLeaf)
 
@@ -65,10 +63,10 @@ struct Stage1_Main: View {
         .navigationBarHidden(true)
     }
         
-    func logicalFunction(size: CGSize) -> CGSize {
+    func logicalFunction() -> CGSize {
         let width: CGFloat = CGFloat.random(in: -120...200)
         let height: CGFloat = CGFloat.random(in: -100...200)
-  
+        print("나 동작해!")
         return CGSize(width: width, height: height)
         
     }
